@@ -34,9 +34,30 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// Define the /api/products endpoint
 app.get('/api/products', async (req, res) => {
-  const products = await prisma.product.findMany();
-  res.json(products);
+  try {
+    const products = await prisma.product.findMany();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching products.' });
+  }
+});
+
+// Define the /api/products/:id endpoint to fetch product by ID
+app.get('/api/products/:id', async (req, res) => {
+  try {
+    const product = await prisma.product.findUnique({
+      where: { id: parseInt(req.params.id, 10) }
+    });
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while fetching the product details.' });
+  }
 });
 
 // Fetch user data
@@ -66,7 +87,7 @@ app.put('/api/user', (req, res) => {
     .catch(error => res.status(500).json({ message: 'Error updating user data' }));
 });
 
-
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import './ProductList.css';
 
 const ProductList = () => {
@@ -15,7 +16,7 @@ const ProductList = () => {
         console.error('There was an error fetching the products!', error);
       });
   }, []);
-  
+
   const filteredProducts = filter === 'all' ? products : products.filter(product => product.category === filter);
 
   return (
@@ -30,11 +31,13 @@ const ProductList = () => {
       </div>
       <div className="product-list">
         {filteredProducts.map(product => (
-          <div key={product.id} className="product-card">
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-            <p>${product.price}</p>
-          </div>
+          <Link to={`/products/${product.id}`} key={product.id} className="product-card">
+            <div>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <p>${product.price}</p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>
