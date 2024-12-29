@@ -105,6 +105,54 @@ app.put('/api/user', (req, res) => {
   }
 });
 
+// Fetch user's cart
+app.get('/api/cart', (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    prisma.cart.findUnique({
+      where: { userId }
+    })
+    .then(cart => res.json(cart))
+    .catch(error => res.status(500).json({ message: 'Error fetching cart' }));
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+});
+
+// Update user's cart
+app.put('/api/cart', (req, res) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+
+  const token = authHeader.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+    const { items } = req.body;
+
+    prisma.cart.upsert({
+      where: { userId },
+      update: { items },
+      create: { userId, items }
+    })
+    .then(cart => res.json(cart))
+    .catch(error => res.status(500).json({ message: 'Error updating cart' }));
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

@@ -8,19 +8,27 @@ generator client {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   name     String
-  username String   @unique
-  email    String   @unique
+  username String  @unique
+  email    String  @unique
   address  String?
   password String
+  cart     Cart?
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   name        String
   description String
   price       Float
   category    String
-  imageUrl    String    
+  imageUrl    String
+}
+
+model Cart {
+  id     Int  @id @default(autoincrement())
+  userId Int  @unique // Add `@unique` to ensure one-to-one relationship
+  user   User @relation(fields: [userId], references: [id])
+  items  Json
 }

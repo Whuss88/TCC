@@ -18,6 +18,7 @@ const Navbar = () => {
       <h1>The Canvas Club Va</h1>
       <div className="links">
         <Link to="/">Home</Link>
+        <Link to="/products">Products</Link> {/* Add Products link */}
         {token ? (
           <>
             <Link to="/profile">Profile</Link>
