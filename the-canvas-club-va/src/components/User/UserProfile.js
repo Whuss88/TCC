@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import './UserProfile.css';
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/user')
-      .then(response => {
-        setUser(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the user data!', error);
-      });
+    axios.get('http://localhost:5000/api/user', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      setUser(response.data);
+    })
+    .catch(error => {
+      console.error('There was an error fetching the user data!', error);
+    });
   }, []);
 
   if (!user) {
@@ -21,13 +24,11 @@ const UserProfile = () => {
   }
 
   return (
-    <div>
-      <h2>User Profile</h2>
-      <p>Name: {user.name}</p>
+    <div className="user-profile">
+      <h2>{user.name}</h2>
       <p>Username: {user.username}</p>
       <p>Email: {user.email}</p>
       <p>Address: {user.address}</p>
-      <Link to="/edit-profile">Edit Profile</Link>
     </div>
   );
 };
