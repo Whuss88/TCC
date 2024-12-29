@@ -1,0 +1,36 @@
+/* src/components/Products/ProductDetail.css */
+
+.product-detail {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.product-detail h2 {
+  margin: 10px 0;
+  color: #007bff;
+}
+
+.product-detail p {
+  color: #555;
+  margin: 5px 0;
+}
+
+.product-detail button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.product-detail button:hover {
+  background-color: #0056b3;
+}
