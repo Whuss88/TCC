@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -7,7 +8,7 @@ const HomePage = () => {
       <header className="hero-section">
         <h1>Welcome to The Canvas Club</h1>
         <p>Your one-stop shop for all your fashion needs!</p>
-        <button>Shop Now</button>
+        <Link to="/products" className="shop-now-button">Shop Now</Link>
       </header>
       <section className="features-section">
         <div className="feature">

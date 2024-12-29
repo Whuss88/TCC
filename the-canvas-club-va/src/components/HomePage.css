@@ -1,55 +1,69 @@
 /* src/components/HomePage.css */
 
-.home-page {
+body {
+  background-color: #f5f7fa; /* Soft background color */
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.home-page {
+  text-align: center;
 }
 
 .hero-section {
-  background-color: #f0f0f0;
-  text-align: center;
-  padding: 50px 20px;
+  background-image: url('https://example.com/images/hero-background.jpg'); /* Add your hero background image URL */
+  background-size: cover;
+  color: white;
+  padding: 100px 20px;
 }
 
 .hero-section h1 {
-  font-size: 3rem;
-  color: #007bff;
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  color: #007bff; /* Change the header color to blue */
 }
 
 .hero-section p {
   font-size: 1.2rem;
-  color: #555;
+  margin-bottom: 40px;
+  color: #007bff; /* Change the paragraph text color to blue */
 }
 
-.hero-section button {
-  background-color: #007bff;
+.shop-now-button {
+  background-color: #ff6347;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 20px;
+  text-decoration: none;
+  padding: 15px 30px;
+  font-size: 1rem;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  display: inline-block;
 }
 
-.hero-section button:hover {
-  background-color: #0056b3;
+.shop-now-button:hover {
+  background-color: #e5533d;
 }
 
 .features-section {
   display: flex;
   justify-content: center;
-  padding: 50px 20px;
-  background-color: #fff;
+  padding: 50px 0;
 }
 
 .feature {
-  margin: 0 20px;
-  text-align: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
+  max-width: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .feature h2 {
   font-size: 1.5rem;
-  color: #007bff;
+  color: #007bff; /* Change the header color to blue */
 }
 
 .feature p {
