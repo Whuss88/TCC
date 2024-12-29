@@ -1,0 +1,16 @@
+# Node.js dependencies
+node_modules/
+
+# TypeScript compiled files
+*.tsbuildinfo
+dist/
+build/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# System files
+.DS_Store
