@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
-import AuthService from '../../services/AuthService';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Login.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleLogin = (e) => {
     e.preventDefault();
-    AuthService.login(username, password).then(() => {
-      // Redirect to user account page or display a message
-    });
+    axios.post('http://localhost:5000/api/auth/login', { username, password })
+      .then(response => {
+        // Store the token (optional)
+        localStorage.setItem('token', response.data.token);
+        // Navigate to the user profile page
+        navigate('/profile');
+      })
+      .catch(error => {
+        console.error('There was an error logging in!', error);
+      });
   };
 
   return (
