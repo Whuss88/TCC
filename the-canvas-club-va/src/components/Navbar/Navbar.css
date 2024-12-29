@@ -1,4 +1,4 @@
-/* src/components/Navbar.css */
+/* src/components/Navbar/Navbar.css */
 
 .navbar {
   background-color: #007bff;
@@ -34,4 +34,18 @@
   border-radius: 50%;
   padding: 2px 8px;
   margin-left: 5px;
+}
+
+.logout-button {
+  background-color: #112291;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #e5533d;
 }
