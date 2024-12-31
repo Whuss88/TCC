@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import axios from 'axios';
+import React, { createContext, useContext, useReducer, useEffect, useState } from 'react';
 
 const CartContext = createContext();
 
@@ -18,13 +17,28 @@ const cartReducer = (state, action) => {
       }
       return [...state, { ...action.payload, quantity: 1 }];
     case 'REMOVE_FROM_CART':
-      return state.map(item =>
-        item.id === action.payload.id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      ).filter(item => item.quantity > 0);
+      return state
+        .map(item =>
+          item.id === action.payload.id
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+        .filter(item => item.quantity > 0);
     default:
       return state;
+  }
+};
+
+
+
+const isLocalStorageAvailable = () => {
+  try {
+    const testKey = '__test__';
+    localStorage.setItem(testKey, testKey);
+    localStorage.removeItem(testKey);
+    return true;
+  } catch (e) {
+    return false;
   }
 };
 
@@ -32,36 +46,19 @@ export const CartProvider = ({ children }) => {
   const [cart, dispatch] = useReducer(cartReducer, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.get('http://localhost:5000/api/cart', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        dispatch({ type: 'SET_CART', payload: response.data.items });
-      })
-      .catch(error => {
-        console.error('There was an error fetching the cart!', error);
-      });
+    if (isLocalStorageAvailable()) {
+      const storedCart = localStorage.getItem('cart');
+      if (storedCart) {
+        dispatch({ type: 'SET_CART', payload: JSON.parse(storedCart) });
+      }
     }
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.put('http://localhost:5000/api/cart', {
-        items: cart
-      }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .catch(error => {
-        console.error('There was an error updating the cart!', error);
-      });
+    if (isLocalStorageAvailable()) {
+      localStorage.setItem('cart', JSON.stringify(cart));
     }
+    console.log(`Cart updated:`, cart)
   }, [cart]);
 
   return (
@@ -70,5 +67,6 @@ export const CartProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
+
 
 export const useCart = () => useContext(CartContext);
