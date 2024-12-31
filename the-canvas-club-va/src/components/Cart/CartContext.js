@@ -58,7 +58,6 @@ export const CartProvider = ({ children }) => {
     if (isLocalStorageAvailable()) {
       localStorage.setItem('cart', JSON.stringify(cart));
     }
-    console.log(`Cart updated:`, cart)
   }, [cart]);
 
   return (

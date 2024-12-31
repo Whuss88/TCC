@@ -7,7 +7,6 @@ const Cart = () => {
   const { cart, dispatch, cartLength } = useCart();
 
   const handleRemoveOne = (id) => {
-    console.log('Dispatching REMOVE_FROM_CART for id:', id); // Debugging line
     dispatch({ type: 'REMOVE_FROM_CART', payload: { id } });
   };
   
